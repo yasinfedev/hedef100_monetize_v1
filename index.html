@@ -122,6 +122,54 @@
             .app-layout { grid-template-columns: 1fr; }
             .side-column { display: none; }
         }
+
+        /* Footer Menü Stilleri */
+.footer-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 40px auto 20px auto;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.footer-hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, transparent, var(--primary), transparent);
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px 25px;
+    margin-bottom: 20px;
+}
+
+.footer-link {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0.7;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-link:hover {
+    color: var(--primary);
+    opacity: 1;
+}
+
+.footer-copyright {
+    font-size: 0.65rem;
+    opacity: 0.5;
+    margin-top: 10px;
+    font-family: 'Orbitron', sans-serif;
+}
     </style>
 </head>
 <body onclick="unlockAudio()">
@@ -179,6 +227,23 @@
         <aside class="side-column">
             <div class="ad-placeholder">REKLAM ALANI<br>160x600</div>
         </aside>
+
+        <!-- ALT MENÜ YAPISI -->
+<footer class="footer-container">
+    <hr class="footer-hr">
+    <nav class="footer-nav">
+        <a href="hakkimizda.html" class="footer-link">Hakkımızda</a>
+        <a href="#howToPlay" class="footer-link">Nasıl Oynanır?</a>
+        <a href="kullanim-sartlari.html" class="footer-link">Kullanım Şartları</a>
+        <a href="kvkk.html" class="footer-link">KVKK</a>
+        <a href="cerez-politikasi.html" class="footer-link">Çerez Politikası</a>
+        <a href="iletisim.html" class="footer-link">İletişim</a>
+        <a href="reklam.html" class="footer-link">Reklam</a>
+    </nav>
+    <div class="footer-copyright">
+        © 2026 HEDEF100.COM | TÜM HAKLARI SAKLIDIR.
+    </div>
+</footer>
 
     </div>
 
