@@ -229,6 +229,11 @@
 #muteBtn i {
     font-size: 1.1rem;
 }
+
+        /* Ses Butonu Renk Durumları */
+.sound-on { background-color: #22c55e !important; } /* Yeşil */
+.sound-off { background-color: #ef4444 !important; } /* Kırmızı */
+#muteBtn i { font-size: 1.2rem; vertical-align: middle; }
         
     </style>
 </head>
@@ -270,9 +275,9 @@
 
             <div class="controls">
     <!-- Mute butonu ikonlu ve yeni sınıflarla güncellendi -->
-    <button id="muteBtn" class="sound-on" onclick="toggleMute(event)" style="flex:0.5;">
-        <i id="muteIcon" class="fas fa-volume-up"></i>
-    </button>
+   <button id="muteBtn" class="sound-on" onclick="toggleMute(event)" style="flex:0.5;">
+    <i id="muteIcon" class="fas fa-volume-up"></i>
+</button>
     <button class="btn-undo" id="undoBtn" onclick="undoMove()" style="background: var(--success);">GERİ AL</button>
     <button onclick="resetGame()" style="background: var(--danger);">SIFIRLA</button>
 </div>
@@ -454,22 +459,23 @@
 
     document.getElementById('resultModal').style.display = 'flex';
 }
-        function toggleMute(event) {
-    if (event) event.preventDefault();
-    isMuted = !isMuted;
-    
+       function toggleMute(e) { 
+    e.stopPropagation(); 
+    const m = document.getElementById('bgMusic'); 
     const btn = document.getElementById('muteBtn');
     const icon = document.getElementById('muteIcon');
 
-    if (isMuted) {
-        // SES KAPALI DURUMU
-        btn.className = 'sound-off';
-        icon.className = 'fas fa-volume-mute';
-    } else {
-        // SES AÇIK DURUMU
-        btn.className = 'sound-on';
-        icon.className = 'fas fa-volume-up';
-    }
+    if (!isMusicPlaying) { 
+        m.play(); 
+        isMusicPlaying = true; 
+        btn.className = 'sound-on'; // Yeşil yapar
+        icon.className = 'fas fa-volume-up'; // Hoparlör açık ikonu
+    } else { 
+        m.pause(); 
+        isMusicPlaying = false; 
+        btn.className = 'sound-off'; // Kırmızı yapar
+        icon.className = 'fas fa-volume-mute'; // Hoparlör kapalı ikonu
+    } 
 }
         function undoMove() { if (undoRights <= 0 || history.length <= 1) return; const last = history.pop(); const cell = document.getElementById(`x${last.x}y${last.y}`); cell.innerText = ''; cell.classList.remove('clicked', 'last-clicked'); undoRights--; score--; const nl = history[history.length - 1]; const nlc = document.getElementById(`x${nl.x}y${nl.y}`); nlc.classList.remove('clicked'); nlc.classList.add('last-clicked'); calculateNextMoves(nl.x, nl.y); updateUI(); }
         function updateUI() {
