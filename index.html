@@ -5,66 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hedef 100 | Strateji ve Zeka Oyunu</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <!-- DÜZELTME 1: Font Awesome İkon Kütüphanesi Eklendi -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-    
     <style>
         :root {
-            /* REKLAM VERENİN RENKLERİNE GÖRE BURAYI DEĞİŞTİREBİLİRSİN */
-            --primary: #38bdf8;   /* Ana renk (Mavi tonu) */
-            --secondary: #818cf8; /* Yardımcı renk (Mor tonu) */
-            --accent: #f472b6;    /* Vurgu rengi (Pembe tonu - Son tıklanan kare) */
-            
-            --bg-color: #0f172a; 
-            --card-bg: #1e293b; 
-            --success: #22c55e;
-            --danger: #ef4444; 
-            --text: #f1f5f9; 
-            --disabled: #475569;
+            --primary: #38bdf8; --secondary: #818cf8; --accent: #f472b6;
+            --bg-color: #0f172a; --card-bg: #1e293b; --success: #22c55e;
+            --danger: #ef4444; --text: #f1f5f9; --disabled: #475569;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; touch-action: manipulation; }
+        body { background-color: var(--bg-color); color: var(--text); font-family: 'Poppins', sans-serif; min-height: 100vh; padding: 20px; }
 
-        body {
-            background-color: var(--bg-color); color: var(--text);
-            font-family: 'Poppins', sans-serif; min-height: 100vh; padding: 20px;
-        }
-
-        /* 3 SÜTUNLU YAPI (GRID) */
-        .app-layout {
-            display: grid;
-            grid-template-columns: 1fr 450px 1fr; /* Sol: Esnek, Orta: Sabit, Sağ: Esnek */
-            gap: 20px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* REKLAM SÜTUNLARI */
-        .side-column {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 60px;
-        }
-
-        .ad-placeholder {
-            width: 160px; /* Standart Skyscraper Boyutu */
-            height: 600px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px dashed var(--disabled);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 0.7rem;
-            color: var(--disabled);
-            position: sticky;
-            top: 20px;
-        }
-
-        /* OYUN MERKEZİ */
+        .app-layout { display: grid; grid-template-columns: 1fr 450px 1fr; gap: 20px; max-width: 1400px; margin: 0 auto; }
+        .side-column { display: flex; flex-direction: column; align-items: center; padding-top: 60px; }
         main { display: flex; flex-direction: column; align-items: center; }
 
         .header-logo {
@@ -74,32 +30,17 @@
             text-transform: uppercase; letter-spacing: 3px; font-weight: 700;
         }
 
-        /* AKORDİYONLAR */
-        .accordion-box {
-            width: 100%; max-width: 450px; margin-bottom: 15px;
-            border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden;
-        }
-        .acc-btn {
-            width: 100%; background: var(--card-bg); padding: 12px; color: var(--primary);
-            font-family: 'Orbitron'; font-size: 0.7rem; border: none; cursor: pointer;
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        .accordion-box { width: 100%; max-width: 450px; margin-bottom: 15px; border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; overflow: hidden; }
+        .acc-btn { width: 100%; background: var(--card-bg); padding: 12px; color: var(--primary); font-family: 'Orbitron'; font-size: 0.7rem; border: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .acc-panel { max-height: 0; overflow: hidden; transition: 0.3s ease-out; background: rgba(30, 41, 59, 0.4); font-size: 0.8rem; }
         .acc-panel.open { max-height: 300px; padding: 15px; border-top: 1px solid rgba(255,255,255,0.05); }
 
-        .stats-container {
-            display: flex; gap: 15px; margin-bottom: 15px; background: var(--card-bg);
-            padding: 10px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
-        }
+        .stats-container { display: flex; gap: 15px; margin-bottom: 15px; background: var(--card-bg); padding: 10px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
         .stat-item { text-align: center; min-width: 65px; }
         .stat-value { display: block; font-size: 1.2rem; font-weight: 700; color: var(--primary); }
         .stat-label { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; }
 
-        #game-board {
-            display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px;
-            background: var(--card-bg); padding: 8px; border-radius: 10px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; max-width: 450px;
-        }
+        #game-board { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; background: var(--card-bg); padding: 8px; border-radius: 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; max-width: 450px; }
         .cell { aspect-ratio: 1/1; background: rgba(255,255,255,0.03); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 600; transition: 0.2s; border: 1px solid rgba(255,255,255,0.05); color: #fff; }
         .cell.clickable { background: rgba(56, 189, 248, 0.15); cursor: pointer; border-color: var(--primary); animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
@@ -110,159 +51,45 @@
         button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: white; }
         .btn-undo:disabled { background: var(--disabled) !important; opacity: 0.4; cursor: not-allowed; filter: grayscale(1); }
 
+        /* DÜZELTME 2: Ses Butonu Renk Durumları */
+        .sound-on { background-color: #22c55e !important; }
+        .sound-off { background-color: #ef4444 !important; }
+        #muteBtn i { font-size: 1.2rem; }
+
         .leaderboard { margin-top: 30px; width: 100%; max-width: 450px; background: rgba(30, 41, 59, 0.5); padding: 15px; border-radius: 10px; }
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
         td { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        /* SONUÇ MODAL */
         #resultModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        /* Instagram Story Formatı (9:16) */
-.result-card {
-    background: var(--card-bg);
-    padding: 40px 20px;
-    border-radius: 20px;
-    text-align: center;
-    border: 2px solid var(--primary);
-    width: 100%;
-    max-width: 380px; /* Yaklaşık Story genişliği */
-    min-height: 640px; /* 9:16 oranını korumak için */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around; /* İçerikleri dikeyde yayar */
-    color: white;
-}
-
-/* Paylaşım anında daha profesyonel görünmesi için arka plan */
-#captureArea {
-    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-/* Kartın arkasına hafif bir efekt */
-#captureArea::before {
-    content: "100";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 15rem;
-    font-weight: 900;
-    color: rgba(255, 255, 255, 0.02);
-    z-index: 0;
-}
+        .result-card { background: var(--card-bg); padding: 40px 20px; border-radius: 20px; text-align: center; border: 2px solid var(--primary); width: 100%; max-width: 380px; min-height: 640px; display: flex; flex-direction: column; justify-content: space-around; color: white; }
+        #captureArea { background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); position: relative; overflow: hidden; }
+        #captureArea::before { content: "100"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 15rem; font-weight: 900; color: rgba(255, 255, 255, 0.02); z-index: 0; }
         .result-score { font-size: 5rem; font-weight: 800; color: var(--accent); line-height: 1; margin: 10px 0; }
 
-        /* MOBİL UYUM */
-        @media (max-width: 900px) {
-            .app-layout { grid-template-columns: 1fr; }
-            .side-column { display: none; }
-        }
+        @media (max-width: 900px) { .app-layout { grid-template-columns: 1fr; } .side-column { display: none; } }
 
-        /* Footer Menü Stilleri */
-.footer-container {
-    grid-column: 1 / -1; /* Bu satır footer'ın tüm sütunları kaplamasını sağlar */
-    width: 100%;
-    max-width: 900px;
-    margin: 40px auto 20px auto;
-    padding-top: 20px;
-    text-align: center;
-}
+        .footer-container { grid-column: 1 / -1; width: 100%; max-width: 900px; margin: 40px auto 20px auto; padding-top: 20px; text-align: center; }
+        .footer-hr { border: 0; height: 1px; background-image: linear-gradient(to right, transparent, var(--primary), transparent); margin-bottom: 20px; opacity: 0.5; }
+        .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px 25px; margin-bottom: 20px; }
+        .footer-link { color: var(--text); text-decoration: none; font-size: 0.75rem; font-weight: 500; opacity: 0.7; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        .footer-link:hover { color: var(--primary); opacity: 1; }
+        .footer-copyright { font-size: 0.65rem; opacity: 0.5; margin-top: 10px; font-family: 'Orbitron', sans-serif; }
 
-.footer-hr {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, transparent, var(--primary), transparent);
-    margin-bottom: 20px;
-    opacity: 0.5;
-}
-
-.footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px 25px;
-    margin-bottom: 20px;
-}
-
-.footer-link {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 0.75rem;
-    font-weight: 500;
-    opacity: 0.7;
-    transition: 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.footer-link:hover {
-    color: var(--primary);
-    opacity: 1;
-}
-
-.footer-copyright {
-    font-size: 0.65rem;
-    opacity: 0.5;
-    margin-top: 10px;
-    font-family: 'Orbitron', sans-serif;
-}
-/* Hak Sayacı Renk Durumları */
-.stat-value.life-3 { color: #22c55e; } /* Yeşil */
-.stat-value.life-2 { color: #eab308; } /* Sarı */
-.stat-value.life-1 { color: #f97316; } /* Turuncu */
-.stat-value.life-0 { color: #ef4444; } /* Kırmızı */
-
-        /* Ses AÇIK - Açık Yeşil */
-.sound-on {
-    background-color: #22c55e !important; /* !important stil çakışmasını önler */
-    color: white;
-}
-
-/* Ses KAPALI - Açık Kırmızı */
-.sound-off {
-    background-color: #ef4444 !important;
-    color: white;
-}
-
-/* İkonun buton içinde düzgün durması için */
-#muteBtn i {
-    font-size: 1.1rem;
-}
-
-        /* Ses Butonu Renk Durumları */
-.sound-on { background-color: #22c55e !important; } /* Yeşil */
-.sound-off { background-color: #ef4444 !important; } /* Kırmızı */
-#muteBtn i { font-size: 1.2rem; vertical-align: middle; }
-        
+        .stat-value.life-3 { color: #22c55e; } .stat-value.life-2 { color: #eab308; } .stat-value.life-1 { color: #f97316; } .stat-value.life-0 { color: #ef4444; }
     </style>
 </head>
 <body onclick="unlockAudio()">
 
     <div class="app-layout">
-        
-        <!-- SOL REKLAM SÜTUNU -->
-<aside class="side-column">
-    <a href="reklam.html">
-        <img src="https://acil42.com/wp-content/uploads/2026/05/Buraya-reklam-verebilirsiniz.png" 
-             alt="Hedef 100 Reklam Alanı" 
-             style="width: 160px; height: 600px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
-    </a>
-</aside>
+        <aside class="side-column">
+            <a href="reklam.html"><img src="https://acil42.com/wp-content/uploads/2026/05/Buraya-reklam-verebilirsiniz.png" alt="Reklam" style="width: 160px; height: 600px; border-radius: 10px;"></a>
+        </aside>
 
-        <!-- MERKEZ OYUN ALANI -->
         <main>
             <div class="header-logo">HEDEF 100</div>
-
             <div class="accordion-box">
                 <button class="acc-btn" onclick="togglePanel('howToPlay', 'icon1')">NASIL OYNANIR? <span id="icon1">▼</span></button>
-                <div id="howToPlay" class="acc-panel">
-                    <div style="padding: 15px;">
-                        • İstediğiniz kareden başlayın.<br>
-                        • Yatay/Dikeyde 3. kareye, çaprazda 2. kareye gidebilirsiniz.<br>
-                        • 100 kareyi de doldurmaya çalışın!
-                    </div>
-                </div>
+                <div id="howToPlay" class="acc-panel"><div style="padding: 15px;">• İstediğiniz kareden başlayın.<br>• Yatay/Dikeyde 3. kareye, çaprazda 2. kareye gidebilirsiniz.<br>• 100 kareyi de doldurmaya çalışın!</div></div>
             </div>
 
             <div class="stats-container">
@@ -274,73 +101,46 @@
             <div id="game-board"></div>
 
             <div class="controls">
-    <!-- Mute butonu ikonlu ve yeni sınıflarla güncellendi -->
-   <button id="muteBtn" class="sound-on" onclick="toggleMute(event)" style="flex:0.5;">
-    <i id="muteIcon" class="fas fa-volume-up"></i>
-</button>
-    <button class="btn-undo" id="undoBtn" onclick="undoMove()" style="background: var(--success);">GERİ AL</button>
-    <button onclick="resetGame()" style="background: var(--danger);">SIFIRLA</button>
-</div>
+                <!-- DÜZELTME 3: İkonlu Buton Yapısı -->
+                <button id="muteBtn" class="sound-off" onclick="toggleMute(event)" style="flex:0.5;">
+                    <i id="muteIcon" class="fas fa-volume-mute"></i>
+                </button>
+                <button class="btn-undo" id="undoBtn" onclick="undoMove()" style="background: var(--success);">GERİ AL</button>
+                <button onclick="resetGame()" style="background: var(--danger);">SIFIRLA</button>
+            </div>
 
             <div class="leaderboard">
                 <h3 style="font-family: Orbitron; font-size: 1rem; margin-bottom: 10px; text-align: center; color: var(--accent);">🏆 TOP 5 SKORLAR</h3>
                 <table id="leaderboardTable"><tbody id="leaderboardBody"></tbody></table>
             </div>
-
-            <div class="accordion-box" style="margin-top: 15px; border-color: rgba(129, 140, 248, 0.3);">
-                <button class="acc-btn" onclick="togglePanel('about', 'icon2')" style="color: var(--secondary);">KİM YAPTI? <span id="icon2">▼</span></button>
-                <div id="about" class="acc-panel">
-                    <div style="padding: 15px; text-align: center; font-family: 'Orbitron'; font-size: 0.7rem;">2026 © Uzm.Dr.Yasin Yıldız</div>
-                </div>
-            </div>
         </main>
 
-        <!-- SAĞ REKLAM SÜTUNU -->
-<aside class="side-column">
-    <a href="reklam.html">
-        <img src="https://acil42.com/wp-content/uploads/2026/05/Buraya-reklam-verebilirsiniz-2.png" 
-             alt="Hedef 100 Reklam Alanı" 
-             style="width: 160px; height: 600px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
-    </a>
-</aside>
+        <aside class="side-column">
+            <a href="reklam.html"><img src="https://acil42.com/wp-content/uploads/2026/05/Buraya-reklam-verebilirsiniz-2.png" alt="Reklam" style="width: 160px; height: 600px; border-radius: 10px;"></a>
+        </aside>
 
-        <!-- ALT MENÜ YAPISI -->
-<footer class="footer-container">
-    <hr class="footer-hr">
-    <nav class="footer-nav">
-        <a href="hakkimizda.html" class="footer-link">Hakkımızda</a>
-        <a href="nasil-oynanir.html" class="footer-link">Nasıl Oynanır?</a>
-        <a href="kullanim-sartlari.html" class="footer-link">Kullanım Şartları</a>
-        <a href="kvkk.html" class="footer-link">KVKK</a>
-        <a href="cerez-politikasi.html" class="footer-link">Çerez Politikası</a>
-        <a href="iletisim.html" class="footer-link">İletişim</a>
-        <a href="reklam.html" class="footer-link">Reklam</a>
-    </nav>
-    <div class="footer-copyright">
-        © 2026 HEDEF100.COM | TÜM HAKLARI SAKLIDIR.
-    </div>
-</footer>
-
+        <footer class="footer-container">
+            <hr class="footer-hr">
+            <nav class="footer-nav">
+                <a href="hakkimizda.html" class="footer-link">Hakkımızda</a>
+                <a href="nasil-oynanir.html" class="footer-link">Nasıl Oynanır?</a>
+                <a href="kullanim-sartlari.html" class="footer-link">Kullanım Şartları</a>
+                <a href="kvkk.html" class="footer-link">KVKK</a>
+                <a href="cerez-politikasi.html" class="footer-link">Çerez Politikası</a>
+                <a href="iletisim.html" class="footer-link">İletişim</a>
+                <a href="reklam.html" class="footer-link">Reklam</a>
+            </nav>
+            <div class="footer-copyright">© 2026 HEDEF100.COM | TÜM HAKLARI SAKLIDIR.</div>
+        </footer>
     </div>
 
-    <!-- MODAL VE SESLER -->
     <div id="resultModal">
         <div class="result-card" id="captureArea">
             <h2 style="font-family: Orbitron; font-size: 1.2rem; color: var(--primary);">HEDEF 100</h2>
-            <p style="margin-top: 10px; opacity: 0.8; font-size: 0.8rem;">OYUN TAMAMLANDI</p>
-            
-            <div class="result-score" id="finalScoreText">0</div>
-            
-            <!-- DEĞİŞİKLİK BURADA: Sabit metin yerine boş bir p etiketi ve ID ekledik -->
             <p id="funMessageText" style="font-weight: 600; color: var(--primary); margin: 15px 0; min-height: 2.5rem; display: flex; align-items: center; justify-content: center;"></p>
-            
-            <div style="font-size: 0.8rem; margin-bottom: 10px; opacity: 0.7;">
-                Süre: <span id="finalTimeText">00:00</span> | Tarih: <span id="finalDateText"></span>
-            </div>
-            
-            <!-- MARKA İMZASI -->
+            <div class="result-score" id="finalScoreText">0</div>
+            <div style="font-size: 0.8rem; margin-bottom: 10px; opacity: 0.7;">Süre: <span id="finalTimeText">00:00</span> | Tarih: <span id="finalDateText"></span></div>
             <div style="font-family: Orbitron; font-size: 0.7rem; color: var(--primary); opacity: 0.5; margin-bottom: 15px;">WWW.HEDEF100.COM</div>
-            
             <div class="modal-btns">
                 <button style="background: var(--success); flex:1;" onclick="generateAndShare()">📱 PAYLAŞ / KAYDET</button>
                 <button style="background: var(--danger); flex:0.4;" onclick="closeModal()">KAPAT</button>
@@ -350,37 +150,19 @@
     <audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
     <script>
-        // OYUN MANTIĞI AYNI KALDI
         const GRID_SIZE = 10;
         let score = 0, history = [], undoRights = 3, timer = 0, timerInterval = null, isMusicPlaying = false, audioUnlocked = false;
         const clickSfx = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-simple-game-countdown-921.mp3');
         const errorSfx = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-negative-tone-interface-608.mp3');
 
-        /* DİNAMİK RENK DEĞİŞTİRME ÖRNEĞİ (Gelecekteki Reklam Veren İçin)
-           Kullanımı: changeGameTheme('#KirmiziHex', '#BeyazHex', '#SariHex'); */
-        function changeGameTheme(primary, secondary, accent) {
-            document.documentElement.style.setProperty('--primary', primary);
-            document.documentElement.style.setProperty('--secondary', secondary);
-            document.documentElement.style.setProperty('--accent', accent);
-        }
-
-        function togglePanel(id, iconId) {
-            const p = document.getElementById(id);
-            const i = document.getElementById(iconId);
-            p.classList.toggle('open');
-            i.innerText = p.classList.contains('open') ? '▲' : '▼';
-        }
-
+        function togglePanel(id, iconId) { const p = document.getElementById(id); const i = document.getElementById(iconId); p.classList.toggle('open'); i.innerText = p.classList.contains('open') ? '▲' : '▼'; }
         function unlockAudio() { if (!audioUnlocked) { clickSfx.play().then(() => { clickSfx.pause(); audioUnlocked = true; }); } }
 
         function initBoard() {
             const b = document.getElementById('game-board'); b.innerHTML = '';
-            for (let y = 1; y <= 10; y++) {
-                for (let x = 1; x <= 10; x++) {
-                    const c = document.createElement('div'); c.id = `x${x}y${y}`; c.className = 'cell clickable';
-                    c.onclick = () => handleCellClick(x, y); b.appendChild(c);
-                }
-            }
+            for (let y = 1; y <= 10; y++) { for (let x = 1; x <= 10; x++) {
+                const c = document.createElement('div'); c.id = `x${x}y${y}`; c.className = 'cell clickable'; c.onclick = () => handleCellClick(x, y); b.appendChild(c);
+            } }
             updateLeaderboard(); updateUI();
         }
 
@@ -409,96 +191,60 @@
             if (count === 0 && score > 0) endGame();
         }
 
-        async function generateAndShare() {
-            const area = document.querySelector("#captureArea");
-            const btns = document.querySelector(".modal-btns");
-            btns.style.display = 'none'; // Kaydederken butonları gizle
-            const canvas = await html2canvas(area, { backgroundColor: "#1e293b", scale: 2 });
-            btns.style.display = 'flex';
-            canvas.toBlob(async (blob) => {
-                const file = new File([blob], 'hedef100_skor.png', { type: 'image/png' });
-                if (navigator.share) {
-                    await navigator.share({ title: 'Hedef 100', text: `Skorum: ${score}`, files: [file] });
-                } else {
-                    const a = document.createElement('a'); a.download = 'skor.png'; a.href = canvas.toDataURL(); a.click();
-                }
-            });
+        function startTimer() { timerInterval = setInterval(() => { timer++; const m = String(Math.floor(timer/60)).padStart(2,'0'), s = String(timer%60).padStart(2,'0'); document.getElementById('timerDisplay').innerText = `${m}:${s}`; }, 1000); }
+        
+        function endGame() {
+            clearInterval(timerInterval);
+            saveScore(score, timer);
+            function getFunMessage(s) {
+                if (s === 99) return "Şu kadarcık kalmıştı!";
+                if (s >= 98) return "El atın da az ittirelim!";
+                if (s >= 95) return "Az daha oluyordu!";
+                if (s >= 90) return "100'e az kaldı ha?";
+                if (s < 30) return "Bunu kimseye anlatamayız...";
+                if (s < 50) return "Kimse görmesin bence :)";
+                const randoms = ["Bir kez daha deneyelim mi?", "Bir dahakine olacak gibi sanki", "Haydi yine yapalım!"];
+                return randoms[Math.floor(Math.random() * randoms.length)];
+            }
+            document.getElementById('finalScoreText').innerText = score;
+            document.getElementById('finalTimeText').innerText = document.getElementById('timerDisplay').innerText;
+            document.getElementById('finalDateText').innerText = new Date().toLocaleDateString('tr-TR');
+            document.getElementById('funMessageText').innerText = getFunMessage(score);
+            document.getElementById('resultModal').style.display = 'flex';
         }
 
-        function startTimer() { timerInterval = setInterval(() => { timer++; const m = String(Math.floor(timer/60)).padStart(2,'0'), s = String(timer%60).padStart(2,'0'); document.getElementById('timerDisplay').innerText = `${m}:${s}`; }, 1000); }
-        function endGame() {
-    clearInterval(timerInterval);
-    saveScore(score, timer);
+        // DÜZELTME 4: İkon ve Renk Değiştiren toggleMute Fonksiyonu
+        function toggleMute(e) { 
+            e.stopPropagation(); 
+            const m = document.getElementById('bgMusic'); 
+            const btn = document.getElementById('muteBtn');
+            const icon = document.getElementById('muteIcon');
 
-    // Mesaj belirleme mantığı
-    function getFunMessage(s) {
-        if (s === 99) return "Şu kadarcık kalmıştı!";
-        if (s >= 98) return "El atın da az ittirelim!";
-        if (s >= 95) return "Az daha oluyordu!";
-        if (s >= 90) return "100'e az kaldı ha?";
-        if (s < 30) return "Bunu kimseye anlatamayız...";
-        if (s < 50) return "Kimse görmesin bence :)";
-        
-        const randoms = [
-            "Bir kez daha deneyelim mi?",
-            "Bir dahakine olacak gibi sanki",
-            "Haydi yine yapalım!",
-            "Stratejini gözden geçir ve tekrar başla!"
-        ];
-        return randoms[Math.floor(Math.random() * randoms.length)];
-    }
+            if (!isMusicPlaying) { 
+                m.play(); isMusicPlaying = true; 
+                btn.className = 'sound-on'; // Yeşil yapar
+                icon.className = 'fas fa-volume-up'; // Hoparlör açık
+            } else { 
+                m.pause(); isMusicPlaying = false; 
+                btn.className = 'sound-off'; // Kırmızı yapar
+                icon.className = 'fas fa-volume-mute'; // Hoparlör kapalı
+            } 
+        }
 
-    // Skor ve süre bilgilerini bas
-    document.getElementById('finalScoreText').innerText = score;
-    document.getElementById('finalTimeText').innerText = document.getElementById('timerDisplay').innerText;
-    document.getElementById('finalDateText').innerText = new Date().toLocaleDateString('tr-TR');
-    
-    // Dinamik mesajı belirle ve HTML'e bas
-    const funMessage = getFunMessage(score);
-    document.getElementById('funMessageText').innerText = funMessage;
-
-    document.getElementById('resultModal').style.display = 'flex';
-}
-       function toggleMute(e) { 
-    e.stopPropagation(); 
-    const m = document.getElementById('bgMusic'); 
-    const btn = document.getElementById('muteBtn');
-    const icon = document.getElementById('muteIcon');
-
-    if (!isMusicPlaying) { 
-        m.play(); 
-        isMusicPlaying = true; 
-        btn.className = 'sound-on'; // Yeşil yapar
-        icon.className = 'fas fa-volume-up'; // Hoparlör açık ikonu
-    } else { 
-        m.pause(); 
-        isMusicPlaying = false; 
-        btn.className = 'sound-off'; // Kırmızı yapar
-        icon.className = 'fas fa-volume-mute'; // Hoparlör kapalı ikonu
-    } 
-}
         function undoMove() { if (undoRights <= 0 || history.length <= 1) return; const last = history.pop(); const cell = document.getElementById(`x${last.x}y${last.y}`); cell.innerText = ''; cell.classList.remove('clicked', 'last-clicked'); undoRights--; score--; const nl = history[history.length - 1]; const nlc = document.getElementById(`x${nl.x}y${nl.y}`); nlc.classList.remove('clicked'); nlc.classList.add('last-clicked'); calculateNextMoves(nl.x, nl.y); updateUI(); }
+        
         function updateUI() {
-    const undoDisplay = document.getElementById('undoDisplay');
-    document.getElementById('scoreDisplay').innerText = score;
-    undoDisplay.innerText = undoRights;
+            const undoDisplay = document.getElementById('undoDisplay');
+            document.getElementById('scoreDisplay').innerText = score;
+            undoDisplay.innerText = undoRights;
+            undoDisplay.classList.remove('life-3', 'life-2', 'life-1', 'life-0');
+            if (undoRights >= 3) undoDisplay.classList.add('life-3');
+            else if (undoRights === 2) undoDisplay.classList.add('life-2');
+            else if (undoRights === 1) undoDisplay.classList.add('life-1');
+            else undoDisplay.classList.add('life-0');
+            document.getElementById('undoBtn').disabled = (undoRights <= 0 || history.length <= 1);
+        }
 
-    // Renk sınıflarını temizle
-    undoDisplay.classList.remove('life-3', 'life-2', 'life-1', 'life-0');
-
-    // Mevcut hak sayısına göre uygun sınıfı ekle
-    if (undoRights >= 3) {
-        undoDisplay.classList.add('life-3');
-    } else if (undoRights === 2) {
-        undoDisplay.classList.add('life-2');
-    } else if (undoRights === 1) {
-        undoDisplay.classList.add('life-1');
-    } else {
-        undoDisplay.classList.add('life-0');
-    }
-
-    document.getElementById('undoBtn').disabled = (undoRights <= 0 || history.length <= 1);
-}
         function saveScore(s, t) { let scs = JSON.parse(localStorage.getItem('h100Scores') || '[]'); scs.push({ score: s, time: t, date: new Date().toLocaleDateString('tr-TR') }); scs.sort((a, b) => b.score - a.score || a.time - b.time); localStorage.setItem('h100Scores', JSON.stringify(scs.slice(0, 5))); updateLeaderboard(); }
         function updateLeaderboard() { const scs = JSON.parse(localStorage.getItem('h100Scores') || '[]'); const b = document.getElementById('leaderboardBody'); b.innerHTML = scs.map((s, i) => `<tr><td>${i+1}.</td><td><b>${s.score} P</b></td><td>${s.time}s</td><td>${s.date}</td></tr>`).join(''); }
         function closeModal() { document.getElementById('resultModal').style.display = 'none'; resetGame(); }
