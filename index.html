@@ -110,6 +110,31 @@
         max-width: 100%; /* Mobilde ekran genişliğine uyum sağlar */
     }
 }
+
+        /* Reklam Kapsayıcısı İçin Düzenleme */
+.board-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+#game-start-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--card-bg);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 2px solid var(--primary);
+    padding: 20px;
+}
     </style>
 </head>
 <body onclick="unlockAudio()">
@@ -142,7 +167,26 @@
                 <div class="stat-item"><span class="stat-value" id="undoDisplay">3</span><span class="stat-label">HAK</span></div>
             </div>
 
-            <div id="game-board"></div>
+           <!-- YENİ KAPSAYICI YAPI -->
+<div class="board-wrapper">
+    
+    <!-- REKLAM KATMANI -->
+    <div id="game-start-overlay">
+        <a href="reklam.html" target="_blank" style="width: 100%; text-align: center;">
+            <img src="https://acil42.com/wp-content/uploads/2026/05/alan-reklami.png" 
+                 alt="Hedef 100 Reklam" 
+                 style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 20px;">
+        </a>
+
+        <button onclick="startActualGame()" 
+                style="background: var(--success); width: 85%; padding: 15px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); color: white; font-weight: bold; cursor: pointer; border: none; border-radius: 8px; font-family: 'Orbitron', sans-serif;">
+            YENİ OYUN BAŞLAT
+        </button>
+    </div>
+
+    <!-- OYUN TAHTASI (ARKADA KALACAK) -->
+    <div id="game-board"></div>
+</div>
 
             <div class="controls">
                 <!-- DÜZELTME 3: İkonlu Buton Yapısı -->
@@ -291,9 +335,16 @@
 
         function saveScore(s, t) { let scs = JSON.parse(localStorage.getItem('h100Scores') || '[]'); scs.push({ score: s, time: t, date: new Date().toLocaleDateString('tr-TR') }); scs.sort((a, b) => b.score - a.score || a.time - b.time); localStorage.setItem('h100Scores', JSON.stringify(scs.slice(0, 5))); updateLeaderboard(); }
         function updateLeaderboard() { const scs = JSON.parse(localStorage.getItem('h100Scores') || '[]'); const b = document.getElementById('leaderboardBody'); b.innerHTML = scs.map((s, i) => `<tr><td>${i+1}.</td><td><b>${s.score} P</b></td><td>${s.time}s</td><td>${s.date}</td></tr>`).join(''); }
-        function closeModal() { document.getElementById('resultModal').style.display = 'none'; resetGame(); }
-        function resetGame() { clearInterval(timerInterval); timerInterval = null; timer = 0; document.getElementById('timerDisplay').innerText = "00:00"; score = 0; history = []; undoRights = 3; initBoard(); }
-        initBoard();
+        function startActualGame() {
+    document.getElementById('game-start-overlay').style.display = 'none';
+    resetGame(); 
+}
+
+// Mevcut closeModal fonksiyonunu şununla değiştirin:
+function closeModal() { 
+    document.getElementById('resultModal').style.display = 'none'; 
+    document.getElementById('game-start-overlay').style.display = 'flex'; 
+}
     </script>
 </body>
 </html>
