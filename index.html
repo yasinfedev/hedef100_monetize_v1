@@ -39,73 +39,47 @@
         .stat-value { display: block; font-size: 1.2rem; font-weight: 700; color: var(--primary); }
         .stat-label { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; }
 
-        /* REKLAM VE TAHTA KAPSAYICISI - KRİTİK ALAN */
-        .board-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 450px;
-            aspect-ratio: 1/1; /* Kare formu korur */
-            margin: 0 auto;
-        }
-
-        #game-start-overlay {
-            position: absolute;
-            inset: 0; /* Üst, alt, sol, sağ 0 yaparak tam kaplar */
-            background: var(--card-bg);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            border: 2px solid var(--primary);
-            padding: 15px;
-        }
-
-        #game-board { 
-            display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; 
-            background: var(--card-bg); padding: 8px; border-radius: 10px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; height: 100%;
-        }
-
+        .board-wrapper { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1/1; margin: 0 auto; }
+        #game-start-overlay { position: absolute; inset: 0; background: var(--card-bg); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; border: 2px solid var(--primary); padding: 15px; }
+        #game-board { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; background: var(--card-bg); padding: 8px; border-radius: 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; height: 100%; }
         .cell { aspect-ratio: 1/1; background: rgba(255,255,255,0.03); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 600; transition: 0.2s; border: 1px solid rgba(255,255,255,0.05); color: #fff; }
         .cell.clickable { background: rgba(56, 189, 248, 0.15); cursor: pointer; border-color: var(--primary); animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
         .cell.clicked { background: var(--secondary); }
         .cell.last-clicked { background: var(--accent); transform: scale(1.08); box-shadow: 0 0 15px var(--accent); }
 
         .controls { margin-top: 20px; display: flex; gap: 10px; width: 100%; max-width: 450px; }
         button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Orbitron', sans-serif; font-size: 0.75rem; color: white; }
         .btn-undo:disabled { background: var(--disabled) !important; opacity: 0.4; cursor: not-allowed; filter: grayscale(1); }
-
         .sound-on { background-color: #22c55e !important; }
         .sound-off { background-color: #ef4444 !important; }
-        #muteBtn i { font-size: 1.2rem; }
 
         .leaderboard { margin-top: 30px; width: 100%; max-width: 450px; background: rgba(30, 41, 59, 0.5); padding: 15px; border-radius: 10px; }
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
         td { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        #resultModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        .result-card { background: var(--card-bg); padding: 40px 20px; border-radius: 20px; text-align: center; border: 2px solid var(--primary); width: 100%; max-width: 380px; min-height: 640px; display: flex; flex-direction: column; justify-content: space-around; color: white; }
-        #captureArea { background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); position: relative; overflow: hidden; }
+        /* STORY MODAL */
+        #resultModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.98); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 10px; }
+        .result-card { 
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); 
+            padding: 40px 20px; border-radius: 20px; text-align: center; border: 2px solid var(--primary); 
+            width: 100%; max-width: 380px; min-height: 640px; display: flex; flex-direction: column; 
+            justify-content: space-around; color: white; position: relative; overflow: hidden;
+        }
+        .soft-bg-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 15rem; font-weight: 900; color: rgba(255, 255, 255, 0.03); z-index: 0; font-family: 'Orbitron'; pointer-events: none; }
+        .result-content { position: relative; z-index: 1; width: 100%; }
+        .result-score { font-size: 6rem; font-weight: 800; color: var(--accent); line-height: 1; margin: 20px 0; text-shadow: 0 0 20px rgba(244, 114, 182, 0.3); }
 
         .top-ad-row { grid-column: 1 / -1; display: flex; justify-content: center; margin-bottom: 20px; width: 100%; }
         .top-banner { width: 100%; max-width: 728px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
         .top-banner img { width: 100%; height: auto; display: block; }
 
-        @media (max-width: 900px) { 
-            .app-layout { grid-template-columns: 1fr; } 
-            .side-column { display: none; } 
-            .board-wrapper { max-width: 95vw; } /* Mobilde yanlardan taşmasın */
-        }
+        @media (max-width: 900px) { .app-layout { grid-template-columns: 1fr; } .side-column { display: none; } .board-wrapper { max-width: 95vw; } }
 
         .footer-container { grid-column: 1 / -1; width: 100%; max-width: 900px; margin: 40px auto 20px auto; padding-top: 20px; text-align: center; }
         .footer-hr { border: 0; height: 1px; background-image: linear-gradient(to right, transparent, var(--primary), transparent); margin-bottom: 20px; opacity: 0.5; }
         .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px 25px; margin-bottom: 20px; }
         .footer-link { color: var(--text); text-decoration: none; font-size: 0.75rem; font-weight: 500; opacity: 0.7; transition: 0.3s; text-transform: uppercase; letter-spacing: 1px; }
         .footer-copyright { font-size: 0.65rem; opacity: 0.5; margin-top: 10px; font-family: 'Orbitron', sans-serif; }
-
         .stat-value.life-3 { color: #22c55e; } .stat-value.life-2 { color: #eab308; } .stat-value.life-1 { color: #f97316; } .stat-value.life-0 { color: #ef4444; }
     </style>
 </head>
@@ -124,7 +98,6 @@
 
         <main>
             <div class="header-logo">HEDEF 100</div>
-            
             <div class="accordion-box">
                 <button class="acc-btn" onclick="togglePanel('howToPlay', 'icon1')">NASIL OYNANIR? <span id="icon1">▼</span></button>
                 <div id="howToPlay" class="acc-panel"><div style="padding: 15px;">• İstediğiniz kareden başlayın.<br>• Yatay/Dikeyde 3. kareye, çaprazda 2. kareye gidebilirsiniz.<br>• 100 kareyi de doldurmaya çalışın!</div></div>
@@ -141,7 +114,7 @@
                     <a href="reklam.html" target="_blank" style="width: 100%; display: block; text-align: center;">
                         <img src="https://acil42.com/wp-content/uploads/2026/05/alan-reklami.png" alt="Reklam" style="max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 15px;">
                     </a>
-                    <button onclick="startActualGame()" style="background: var(--success); width: 90%; padding: 12px; font-size: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">YENİ OYUN BAŞLAT</button>
+                    <button onclick="startActualGame()" style="background: var(--success); width: 90%; padding: 12px; font-size: 1rem;">YENİ OYUN BAŞLAT</button>
                 </div>
                 <div id="game-board"></div>
             </div>
@@ -176,11 +149,18 @@
 
     <div id="resultModal">
         <div class="result-card" id="captureArea">
-            <h2 style="font-family: Orbitron; font-size: 1.2rem; color: var(--primary);">HEDEF 100</h2>
-            <p id="funMessageText" style="font-weight: 600; color: var(--primary); margin: 15px 0; min-height: 2.5rem; display: flex; align-items: center; justify-content: center;"></p>
-            <div class="result-score" id="finalScoreText">0</div>
-            <div style="font-size: 0.8rem; margin-bottom: 10px; opacity: 0.7;">Süre: <span id="finalTimeText">00:00</span> | Tarih: <span id="finalDateText"></span></div>
-            <div class="modal-btns">
+            <div class="soft-bg-text">100</div>
+            <div class="result-content">
+                <h2 style="font-family: Orbitron; font-size: 1.2rem; color: var(--primary);">HEDEF 100</h2>
+                <p style="margin-top: 10px; opacity: 0.8; font-size: 0.8rem;">OYUN TAMAMLANDI</p>
+                <div class="result-score" id="finalScoreText">0</div>
+                <p id="funMessageText" style="font-weight: 600; color: var(--primary); margin: 15px 0; min-height: 2.5rem; padding: 0 10px;"></p>
+                <div style="font-size: 0.8rem; margin-bottom: 20px; opacity: 0.7;">
+                    Süre: <span id="finalTimeText">00:00</span> | Tarih: <span id="finalDateText"></span>
+                </div>
+                <div style="font-family: Orbitron; font-size: 0.7rem; color: var(--primary); opacity: 0.5;">WWW.HEDEF100.COM</div>
+            </div>
+            <div class="modal-btns" style="position: relative; z-index: 2; display: flex; gap: 10px; width: 100%;">
                 <button style="background: var(--success); flex:1;" onclick="generateAndShare()">📱 PAYLAŞ / KAYDET</button>
                 <button style="background: var(--danger); flex:0.4;" onclick="closeModal()">KAPAT</button>
             </div>
@@ -251,6 +231,30 @@
             document.getElementById('finalDateText').innerText = new Date().toLocaleDateString('tr-TR');
             document.getElementById('funMessageText').innerText = getFunMessage(score);
             document.getElementById('resultModal').style.display = 'flex';
+        }
+
+        async function generateAndShare() {
+            const area = document.querySelector("#captureArea");
+            const btns = document.querySelector(".modal-btns");
+            btns.style.visibility = 'hidden'; // Butonları tamamen gizle (yer kaplamaya devam etsin ama görünmesin)
+            
+            const canvas = await html2canvas(area, { 
+                backgroundColor: "#0f172a", 
+                scale: 3, // Daha net görüntü için
+                logging: false,
+                useCORS: true 
+            });
+            
+            btns.style.visibility = 'visible';
+            
+            canvas.toBlob(async (blob) => {
+                const file = new File([blob], 'hedef100_skor.png', { type: 'image/png' });
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                    await navigator.share({ title: 'Hedef 100', text: `Hedef 100'de skorum: ${score}!`, files: [file] });
+                } else {
+                    const a = document.createElement('a'); a.download = 'hedef100_skor.png'; a.href = canvas.toDataURL(); a.click();
+                }
+            }, 'image/png');
         }
 
         function toggleMute(e) { 
