@@ -336,16 +336,21 @@
         function undoMove() { if (undoRights <= 0 || history.length <= 1) return; const last = history.pop(); const cell = document.getElementById(`x${last.x}y${last.y}`); cell.innerText = ''; cell.classList.remove('clicked', 'last-clicked'); undoRights--; score--; const nl = history[history.length - 1]; const nlc = document.getElementById(`x${nl.x}y${nl.y}`); nlc.classList.remove('clicked'); nlc.classList.add('last-clicked'); calculateNextMoves(nl.x, nl.y); updateUI(); }
         
         function updateUI() {
-            const undoDisplay = document.getElementById('undoDisplay');
-            document.getElementById('scoreDisplay').innerText = score;
-            undoDisplay.innerText = undoRights;
-            undoDisplay.classList.remove('life-3', 'life-2', 'life-1', 'life-0');
-            if (undoRights >= 3) undoDisplay.classList.add('life-3');
-            else if (undoRights === 2) undoDisplay.classList.add('life-2');
-            else if (undoRights === 1) undoDisplay.classList.add('life-1');
-            else undoDisplay.classList.add('life-0');
-            document.getElementById('undoBtn').disabled = (undoRights <= 0 || history.length <= 1);
-        }
+    const undoDisplay = document.getElementById('undoDisplay');
+    document.getElementById('scoreDisplay').innerText = score;
+    undoDisplay.innerText = undoRights;
+
+    // Renk sınıflarını temizle
+    undoDisplay.classList.remove('life-3', 'life-2', 'life-1', 'life-0');
+
+    // Hak sayısına göre renk ata
+    if (undoRights >= 3) undoDisplay.classList.add('life-3');      // Yeşil[cite: 4]
+    else if (undoRights === 2) undoDisplay.classList.add('life-2'); // Sarı[cite: 4]
+    else if (undoRights === 1) undoDisplay.classList.add('life-1'); // Turuncu[cite: 4]
+    else undoDisplay.classList.add('life-0');                     // Kırmızı[cite: 4]
+
+    document.getElementById('undoBtn').disabled = (undoRights <= 0 || history.length <= 1);
+}
 
         function saveScore(s, t) { let scs = JSON.parse(localStorage.getItem('h100Scores') || '[]'); scs.push({ score: s, time: t, date: new Date().toLocaleDateString('tr-TR') }); scs.sort((a, b) => b.score - a.score || a.time - b.time); localStorage.setItem('h100Scores', JSON.stringify(scs.slice(0, 5))); updateLeaderboard(); }
         function updateLeaderboard() { const scs = JSON.parse(localStorage.getItem('h100Scores') || '[]'); const b = document.getElementById('leaderboardBody'); b.innerHTML = scs.map((s, i) => `<tr><td>${i+1}.</td><td><b>${s.score} P</b></td><td>${s.time}s</td><td>${s.date}</td></tr>`).join(''); }
