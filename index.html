@@ -76,11 +76,55 @@
         .footer-copyright { font-size: 0.65rem; opacity: 0.5; margin-top: 10px; font-family: 'Orbitron', sans-serif; }
 
         .stat-value.life-3 { color: #22c55e; } .stat-value.life-2 { color: #eab308; } .stat-value.life-1 { color: #f97316; } .stat-value.life-0 { color: #ef4444; }
+
+        /* Üst Banner Konumlandırma */
+.top-ad-row {
+    grid-column: 1 / -1; /* Masaüstünde 3 sütunu da kaplar */
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.top-banner {
+    width: 100%;
+    max-width: 728px; /* Görselin orijinal genişliği */
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.top-banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Mobil İçin Uyum (Ekran daralınca banner da küçülür) */
+@media (max-width: 900px) {
+    .top-ad-row {
+        padding: 0 10px;
+    }
+    .top-banner {
+        max-width: 100%; /* Mobilde ekran genişliğine uyum sağlar */
+    }
+}
     </style>
 </head>
 <body onclick="unlockAudio()">
 
     <div class="app-layout">
+
+        <!-- ÜST BANNER ALANI -->
+    <div class="top-ad-row">
+        <div class="top-banner">
+            <a href="reklam.html">
+                <img src="https://acil42.com/wp-content/uploads/2026/05/top-banner-3.png" alt="Hedef 100 Reklam">
+            </a>
+        </div>
+    </div>
+        
         <aside class="side-column">
             <a href="reklam.html"><img src="https://acil42.com/wp-content/uploads/2026/05/Buraya-reklam-verebilirsiniz.png" alt="Reklam" style="width: 160px; height: 600px; border-radius: 10px;"></a>
         </aside>
