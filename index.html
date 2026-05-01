@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hedef 100 | Strateji ve Zeka Oyunu</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     
     <style>
         :root {
@@ -210,6 +212,23 @@
 .stat-value.life-2 { color: #eab308; } /* Sarı */
 .stat-value.life-1 { color: #f97316; } /* Turuncu */
 .stat-value.life-0 { color: #ef4444; } /* Kırmızı */
+
+        /* Ses AÇIK - Açık Yeşil */
+.sound-on {
+    background-color: #22c55e !important; /* !important stil çakışmasını önler */
+    color: white;
+}
+
+/* Ses KAPALI - Açık Kırmızı */
+.sound-off {
+    background-color: #ef4444 !important;
+    color: white;
+}
+
+/* İkonun buton içinde düzgün durması için */
+#muteBtn i {
+    font-size: 1.1rem;
+}
         
     </style>
 </head>
@@ -250,10 +269,13 @@
             <div id="game-board"></div>
 
             <div class="controls">
-                <button style="background: #475569; flex:0.5;" id="muteBtn" onclick="toggleMute(event)">🎵 KAPALI</button>
-                <button class="btn-undo" id="undoBtn" onclick="undoMove()" style="background: var(--success);">GERİ AL</button>
-                <button onclick="resetGame()" style="background: var(--danger);">SIFIRLA</button>
-            </div>
+    <!-- Mute butonu ikonlu ve yeni sınıflarla güncellendi -->
+    <button id="muteBtn" class="sound-on" onclick="toggleMute(event)" style="flex:0.5;">
+        <i id="muteIcon" class="fas fa-volume-up"></i>
+    </button>
+    <button class="btn-undo" id="undoBtn" onclick="undoMove()" style="background: var(--success);">GERİ AL</button>
+    <button onclick="resetGame()" style="background: var(--danger);">SIFIRLA</button>
+</div>
 
             <div class="leaderboard">
                 <h3 style="font-family: Orbitron; font-size: 1rem; margin-bottom: 10px; text-align: center; color: var(--accent);">🏆 TOP 5 SKORLAR</h3>
@@ -432,7 +454,23 @@
 
     document.getElementById('resultModal').style.display = 'flex';
 }
-        function toggleMute(e) { e.stopPropagation(); const m = document.getElementById('bgMusic'); if (!isMusicPlaying) { m.play(); isMusicPlaying = true; document.getElementById('muteBtn').innerText = "🎵 AÇIK"; } else { m.pause(); isMusicPlaying = false; document.getElementById('muteBtn').innerText = "🎵 KAPALI"; } }
+        function toggleMute(event) {
+    if (event) event.preventDefault();
+    isMuted = !isMuted;
+    
+    const btn = document.getElementById('muteBtn');
+    const icon = document.getElementById('muteIcon');
+
+    if (isMuted) {
+        // SES KAPALI DURUMU
+        btn.className = 'sound-off';
+        icon.className = 'fas fa-volume-mute';
+    } else {
+        // SES AÇIK DURUMU
+        btn.className = 'sound-on';
+        icon.className = 'fas fa-volume-up';
+    }
+}
         function undoMove() { if (undoRights <= 0 || history.length <= 1) return; const last = history.pop(); const cell = document.getElementById(`x${last.x}y${last.y}`); cell.innerText = ''; cell.classList.remove('clicked', 'last-clicked'); undoRights--; score--; const nl = history[history.length - 1]; const nlc = document.getElementById(`x${nl.x}y${nl.y}`); nlc.classList.remove('clicked'); nlc.classList.add('last-clicked'); calculateNextMoves(nl.x, nl.y); updateUI(); }
         function updateUI() {
     const undoDisplay = document.getElementById('undoDisplay');
