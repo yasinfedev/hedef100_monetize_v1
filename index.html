@@ -41,7 +41,7 @@
 
         .board-wrapper { position: relative; width: 100%; max-width: 450px; aspect-ratio: 1/1; margin: 0 auto; }
         #game-start-overlay { position: absolute; inset: 0; background: var(--card-bg); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; border: 2px solid var(--primary); padding: 15px; }
-        #game-board { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; background: var(--card-bg); padding: 8px; border-radius: 10px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; height: 100%; }
+        #game-board { display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; background: var(--card-bg); padding: 8px; border-radius: 10px; width: 100%; height: 100%; }
         .cell { aspect-ratio: 1/1; background: rgba(255,255,255,0.03); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 600; transition: 0.2s; border: 1px solid rgba(255,255,255,0.05); color: #fff; }
         .cell.clickable { background: rgba(56, 189, 248, 0.15); cursor: pointer; border-color: var(--primary); animation: pulse 1.5s infinite; }
         .cell.clicked { background: var(--secondary); }
@@ -57,7 +57,7 @@
         table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
         td { padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        /* STORY MODAL */
+        /* STORY MODAL TASARIMI */
         #resultModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.98); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 10px; }
         .result-card { 
             background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); 
@@ -114,7 +114,7 @@
                     <a href="reklam.html" target="_blank" style="width: 100%; display: block; text-align: center;">
                         <img src="https://acil42.com/wp-content/uploads/2026/05/alan-reklami.png" alt="Reklam" style="max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 15px;">
                     </a>
-                    <button onclick="startActualGame()" style="background: var(--success); width: 90%; padding: 12px; font-size: 1rem;">YENİ OYUN BAŞLAT</button>
+                    <button onclick="startActualGame()" style="background: var(--success); width: 90%; padding: 12px; font-size: 1rem; color: white;">YENİ OYUN BAŞLAT</button>
                 </div>
                 <div id="game-board"></div>
             </div>
@@ -160,7 +160,7 @@
                 </div>
                 <div style="font-family: Orbitron; font-size: 0.7rem; color: var(--primary); opacity: 0.5;">WWW.HEDEF100.COM</div>
             </div>
-            <div class="modal-btns" style="position: relative; z-index: 2; display: flex; gap: 10px; width: 100%;">
+            <div class="modal-btns" style="position: relative; z-index: 2; display: flex; gap: 10px; width: 100%; padding: 0 10px;">
                 <button style="background: var(--success); flex:1;" onclick="generateAndShare()">📱 PAYLAŞ / KAYDET</button>
                 <button style="background: var(--danger); flex:0.4;" onclick="closeModal()">KAPAT</button>
             </div>
@@ -236,25 +236,41 @@
         async function generateAndShare() {
             const area = document.querySelector("#captureArea");
             const btns = document.querySelector(".modal-btns");
-            btns.style.visibility = 'hidden'; // Butonları tamamen gizle (yer kaplamaya devam etsin ama görünmesin)
             
-            const canvas = await html2canvas(area, { 
-                backgroundColor: "#0f172a", 
-                scale: 3, // Daha net görüntü için
-                logging: false,
-                useCORS: true 
-            });
+            // Butonları gizle ama yer kaplamaya devam etsin (tasarım bozulmasın diye visibility kullanıyoruz)
+            btns.style.visibility = 'hidden'; 
             
-            btns.style.visibility = 'visible';
-            
-            canvas.toBlob(async (blob) => {
-                const file = new File([blob], 'hedef100_skor.png', { type: 'image/png' });
-                if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({ title: 'Hedef 100', text: `Hedef 100'de skorum: ${score}!`, files: [file] });
-                } else {
-                    const a = document.createElement('a'); a.download = 'hedef100_skor.png'; a.href = canvas.toDataURL(); a.click();
-                }
-            }, 'image/png');
+            try {
+                const canvas = await html2canvas(area, { 
+                    backgroundColor: "#0f172a", 
+                    scale: 3, 
+                    logging: false,
+                    useCORS: true,
+                    allowTaint: true
+                });
+                
+                btns.style.visibility = 'visible';
+                
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'hedef100_skor.png', { type: 'image/png' });
+                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({ 
+                            title: 'Hedef 100', 
+                            text: `Hedef 100 oyununda skorum: ${score}! Haydi sen de dene: www.hedef100.com`, 
+                            files: [file] 
+                        });
+                    } else {
+                        const a = document.createElement('a'); 
+                        a.download = 'hedef100_skor.png'; 
+                        a.href = canvas.toDataURL("image/png"); 
+                        a.click();
+                    }
+                }, 'image/png');
+            } catch (err) {
+                console.error("Görsel oluşturulamadı:", err);
+                btns.style.visibility = 'visible';
+                alert("Görsel oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.");
+            }
         }
 
         function toggleMute(e) { 
