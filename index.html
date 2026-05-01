@@ -171,6 +171,12 @@
     margin-top: 10px;
     font-family: 'Orbitron', sans-serif;
 }
+/* Hak Sayacı Renk Durumları */
+.stat-value.life-3 { color: #22c55e; } /* Yeşil */
+.stat-value.life-2 { color: #eab308; } /* Sarı */
+.stat-value.life-1 { color: #f97316; } /* Turuncu */
+.stat-value.life-0 { color: #ef4444; } /* Kırmızı */
+        
     </style>
 </head>
 <body onclick="unlockAudio()">
@@ -357,7 +363,27 @@
         function endGame() { clearInterval(timerInterval); saveScore(score, timer); document.getElementById('finalScoreText').innerText = score; document.getElementById('finalTimeText').innerText = document.getElementById('timerDisplay').innerText; document.getElementById('finalDateText').innerText = new Date().toLocaleDateString('tr-TR'); document.getElementById('resultModal').style.display = 'flex'; }
         function toggleMute(e) { e.stopPropagation(); const m = document.getElementById('bgMusic'); if (!isMusicPlaying) { m.play(); isMusicPlaying = true; document.getElementById('muteBtn').innerText = "🎵 AÇIK"; } else { m.pause(); isMusicPlaying = false; document.getElementById('muteBtn').innerText = "🎵 KAPALI"; } }
         function undoMove() { if (undoRights <= 0 || history.length <= 1) return; const last = history.pop(); const cell = document.getElementById(`x${last.x}y${last.y}`); cell.innerText = ''; cell.classList.remove('clicked', 'last-clicked'); undoRights--; score--; const nl = history[history.length - 1]; const nlc = document.getElementById(`x${nl.x}y${nl.y}`); nlc.classList.remove('clicked'); nlc.classList.add('last-clicked'); calculateNextMoves(nl.x, nl.y); updateUI(); }
-        function updateUI() { document.getElementById('scoreDisplay').innerText = score; document.getElementById('undoDisplay').innerText = undoRights; document.getElementById('undoBtn').disabled = (undoRights <= 0 || history.length <= 1); }
+        function updateUI() {
+    const undoDisplay = document.getElementById('undoDisplay');
+    document.getElementById('scoreDisplay').innerText = score;
+    undoDisplay.innerText = undoRights;
+
+    // Renk sınıflarını temizle
+    undoDisplay.classList.remove('life-3', 'life-2', 'life-1', 'life-0');
+
+    // Mevcut hak sayısına göre uygun sınıfı ekle
+    if (undoRights >= 3) {
+        undoDisplay.classList.add('life-3');
+    } else if (undoRights === 2) {
+        undoDisplay.classList.add('life-2');
+    } else if (undoRights === 1) {
+        undoDisplay.classList.add('life-1');
+    } else {
+        undoDisplay.classList.add('life-0');
+    }
+
+    document.getElementById('undoBtn').disabled = (undoRights <= 0 || history.length <= 1);
+}
         function saveScore(s, t) { let scs = JSON.parse(localStorage.getItem('h100Scores') || '[]'); scs.push({ score: s, time: t, date: new Date().toLocaleDateString('tr-TR') }); scs.sort((a, b) => b.score - a.score || a.time - b.time); localStorage.setItem('h100Scores', JSON.stringify(scs.slice(0, 5))); updateLeaderboard(); }
         function updateLeaderboard() { const scs = JSON.parse(localStorage.getItem('h100Scores') || '[]'); const b = document.getElementById('leaderboardBody'); b.innerHTML = scs.map((s, i) => `<tr><td>${i+1}.</td><td><b>${s.score} P</b></td><td>${s.time}s</td><td>${s.date}</td></tr>`).join(''); }
         function closeModal() { document.getElementById('resultModal').style.display = 'none'; resetGame(); }
