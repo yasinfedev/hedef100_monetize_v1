@@ -114,7 +114,41 @@
 
         /* SONUÇ MODAL */
         #resultModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-        .result-card { background: var(--card-bg); padding: 30px; border-radius: 20px; text-align: center; border: 2px solid var(--primary); max-width: 380px; width: 100%; color: white; }
+        /* Instagram Story Formatı (9:16) */
+.result-card {
+    background: var(--card-bg);
+    padding: 40px 20px;
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid var(--primary);
+    width: 100%;
+    max-width: 380px; /* Yaklaşık Story genişliği */
+    min-height: 640px; /* 9:16 oranını korumak için */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* İçerikleri dikeyde yayar */
+    color: white;
+}
+
+/* Paylaşım anında daha profesyonel görünmesi için arka plan */
+#captureArea {
+    background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Kartın arkasına hafif bir efekt */
+#captureArea::before {
+    content: "100";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 15rem;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.02);
+    z-index: 0;
+}
         .result-score { font-size: 5rem; font-weight: 800; color: var(--accent); line-height: 1; margin: 10px 0; }
 
         /* MOBİL UYUM */
@@ -267,20 +301,25 @@
         <div class="result-card" id="captureArea">
             <h2 style="font-family: Orbitron; font-size: 1.2rem; color: var(--primary);">HEDEF 100</h2>
             <p style="margin-top: 10px; opacity: 0.8; font-size: 0.8rem;">OYUN TAMAMLANDI</p>
+            
             <div class="result-score" id="finalScoreText">0</div>
-            <p style="font-weight: 600; color: var(--primary); margin-bottom: 15px;">"Bakalım beni geçebilecek misin?"</p>
+            
+            <!-- DEĞİŞİKLİK BURADA: Sabit metin yerine boş bir p etiketi ve ID ekledik -->
+            <p id="funMessageText" style="font-weight: 600; color: var(--primary); margin: 15px 0; min-height: 2.5rem; display: flex; align-items: center; justify-content: center;"></p>
+            
             <div style="font-size: 0.8rem; margin-bottom: 10px; opacity: 0.7;">
                 Süre: <span id="finalTimeText">00:00</span> | Tarih: <span id="finalDateText"></span>
             </div>
+            
             <!-- MARKA İMZASI -->
             <div style="font-family: Orbitron; font-size: 0.7rem; color: var(--primary); opacity: 0.5; margin-bottom: 15px;">WWW.HEDEF100.COM</div>
+            
             <div class="modal-btns">
                 <button style="background: var(--success); flex:1;" onclick="generateAndShare()">📱 PAYLAŞ / KAYDET</button>
                 <button style="background: var(--danger); flex:0.4;" onclick="closeModal()">KAPAT</button>
             </div>
         </div>
     </div>
-
     <audio id="bgMusic" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
     <script>
@@ -360,7 +399,39 @@
         }
 
         function startTimer() { timerInterval = setInterval(() => { timer++; const m = String(Math.floor(timer/60)).padStart(2,'0'), s = String(timer%60).padStart(2,'0'); document.getElementById('timerDisplay').innerText = `${m}:${s}`; }, 1000); }
-        function endGame() { clearInterval(timerInterval); saveScore(score, timer); document.getElementById('finalScoreText').innerText = score; document.getElementById('finalTimeText').innerText = document.getElementById('timerDisplay').innerText; document.getElementById('finalDateText').innerText = new Date().toLocaleDateString('tr-TR'); document.getElementById('resultModal').style.display = 'flex'; }
+        function endGame() {
+    clearInterval(timerInterval);
+    saveScore(score, timer);
+
+    // Mesaj belirleme mantığı
+    function getFunMessage(s) {
+        if (s === 99) return "Şu kadarcık kalmıştı!";
+        if (s >= 98) return "El atın da az ittirelim!";
+        if (s >= 95) return "Az daha oluyordu!";
+        if (s >= 90) return "100'e az kaldı ha?";
+        if (s < 30) return "Bunu kimseye anlatamayız...";
+        if (s < 50) return "Kimse görmesin bence :)";
+        
+        const randoms = [
+            "Bir kez daha deneyelim mi?",
+            "Bir dahakine olacak gibi sanki",
+            "Haydi yine yapalım!",
+            "Stratejini gözden geçir ve tekrar başla!"
+        ];
+        return randoms[Math.floor(Math.random() * randoms.length)];
+    }
+
+    // Skor ve süre bilgilerini bas
+    document.getElementById('finalScoreText').innerText = score;
+    document.getElementById('finalTimeText').innerText = document.getElementById('timerDisplay').innerText;
+    document.getElementById('finalDateText').innerText = new Date().toLocaleDateString('tr-TR');
+    
+    // Dinamik mesajı belirle ve HTML'e bas
+    const funMessage = getFunMessage(score);
+    document.getElementById('funMessageText').innerText = funMessage;
+
+    document.getElementById('resultModal').style.display = 'flex';
+}
         function toggleMute(e) { e.stopPropagation(); const m = document.getElementById('bgMusic'); if (!isMusicPlaying) { m.play(); isMusicPlaying = true; document.getElementById('muteBtn').innerText = "🎵 AÇIK"; } else { m.pause(); isMusicPlaying = false; document.getElementById('muteBtn').innerText = "🎵 KAPALI"; } }
         function undoMove() { if (undoRights <= 0 || history.length <= 1) return; const last = history.pop(); const cell = document.getElementById(`x${last.x}y${last.y}`); cell.innerText = ''; cell.classList.remove('clicked', 'last-clicked'); undoRights--; score--; const nl = history[history.length - 1]; const nlc = document.getElementById(`x${nl.x}y${nl.y}`); nlc.classList.remove('clicked'); nlc.classList.add('last-clicked'); calculateNextMoves(nl.x, nl.y); updateUI(); }
         function updateUI() {
