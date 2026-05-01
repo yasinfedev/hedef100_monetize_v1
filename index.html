@@ -39,17 +39,18 @@
         .stat-value { display: block; font-size: 1.2rem; font-weight: 700; color: var(--primary); }
         .stat-label { font-size: 0.65rem; text-transform: uppercase; opacity: 0.7; }
 
-        /* REKLAM VE TAHTA KAPSAYICISI */
+        /* REKLAM VE TAHTA KAPSAYICISI - KRİTİK ALAN */
         .board-wrapper {
             position: relative;
             width: 100%;
             max-width: 450px;
+            aspect-ratio: 1/1; /* Kare formu korur */
             margin: 0 auto;
         }
 
         #game-start-overlay {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            inset: 0; /* Üst, alt, sol, sağ 0 yaparak tam kaplar */
             background: var(--card-bg);
             z-index: 100;
             display: flex;
@@ -58,13 +59,13 @@
             justify-content: center;
             border-radius: 10px;
             border: 2px solid var(--primary);
-            padding: 20px;
+            padding: 15px;
         }
 
         #game-board { 
             display: grid; grid-template-columns: repeat(10, 1fr); gap: 4px; 
             background: var(--card-bg); padding: 8px; border-radius: 10px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5); width: 100%; height: 100%;
         }
 
         .cell { aspect-ratio: 1/1; background: rgba(255,255,255,0.03); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; font-weight: 600; transition: 0.2s; border: 1px solid rgba(255,255,255,0.05); color: #fff; }
@@ -88,13 +89,16 @@
         #resultModal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
         .result-card { background: var(--card-bg); padding: 40px 20px; border-radius: 20px; text-align: center; border: 2px solid var(--primary); width: 100%; max-width: 380px; min-height: 640px; display: flex; flex-direction: column; justify-content: space-around; color: white; }
         #captureArea { background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); position: relative; overflow: hidden; }
-        .result-score { font-size: 5rem; font-weight: 800; color: var(--accent); line-height: 1; margin: 10px 0; }
 
         .top-ad-row { grid-column: 1 / -1; display: flex; justify-content: center; margin-bottom: 20px; width: 100%; }
         .top-banner { width: 100%; max-width: 728px; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); }
         .top-banner img { width: 100%; height: auto; display: block; }
 
-        @media (max-width: 900px) { .app-layout { grid-template-columns: 1fr; } .side-column { display: none; } }
+        @media (max-width: 900px) { 
+            .app-layout { grid-template-columns: 1fr; } 
+            .side-column { display: none; } 
+            .board-wrapper { max-width: 95vw; } /* Mobilde yanlardan taşmasın */
+        }
 
         .footer-container { grid-column: 1 / -1; width: 100%; max-width: 900px; margin: 40px auto 20px auto; padding-top: 20px; text-align: center; }
         .footer-hr { border: 0; height: 1px; background-image: linear-gradient(to right, transparent, var(--primary), transparent); margin-bottom: 20px; opacity: 0.5; }
@@ -120,6 +124,7 @@
 
         <main>
             <div class="header-logo">HEDEF 100</div>
+            
             <div class="accordion-box">
                 <button class="acc-btn" onclick="togglePanel('howToPlay', 'icon1')">NASIL OYNANIR? <span id="icon1">▼</span></button>
                 <div id="howToPlay" class="acc-panel"><div style="padding: 15px;">• İstediğiniz kareden başlayın.<br>• Yatay/Dikeyde 3. kareye, çaprazda 2. kareye gidebilirsiniz.<br>• 100 kareyi de doldurmaya çalışın!</div></div>
@@ -133,10 +138,10 @@
 
             <div class="board-wrapper">
                 <div id="game-start-overlay">
-                    <a href="reklam.html" target="_blank" style="width: 100%; text-align: center;">
-                        <img src="https://acil42.com/wp-content/uploads/2026/05/alan-reklami.png" alt="Reklam" style="width: 100%; height: auto; border-radius: 5px; margin-bottom: 20px;">
+                    <a href="reklam.html" target="_blank" style="width: 100%; display: block; text-align: center;">
+                        <img src="https://acil42.com/wp-content/uploads/2026/05/alan-reklami.png" alt="Reklam" style="max-width: 100%; height: auto; border-radius: 5px; margin-bottom: 15px;">
                     </a>
-                    <button onclick="startActualGame()" style="background: var(--success); width: 85%; padding: 15px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">YENİ OYUN BAŞLAT</button>
+                    <button onclick="startActualGame()" style="background: var(--success); width: 90%; padding: 12px; font-size: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">YENİ OYUN BAŞLAT</button>
                 </div>
                 <div id="game-board"></div>
             </div>
