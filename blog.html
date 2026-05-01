@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeka Günlüğü | Hedef 100 Blog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { 
+            --primary: #38bdf8; --secondary: #818cf8; --accent: #f472b6;
+            --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; 
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Poppins', sans-serif; padding: 20px; min-height: 100vh; }
+
+        .container { max-width: 900px; margin: 0 auto; }
+
+        header { text-align: center; margin-bottom: 50px; padding-top: 30px; }
+        .nav-back { color: var(--accent); text-decoration: none; font-family: 'Orbitron'; font-size: 0.8rem; display: inline-block; margin-bottom: 20px; transition: 0.3s; }
+        .nav-back:hover { transform: translateX(-5px); }
+        h1 { font-family: 'Orbitron'; font-size: 2.5rem; background: linear-gradient(to right, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; margin-bottom: 10px; }
+        .subtitle { opacity: 0.7; font-weight: 300; letter-spacing: 1px; }
+
+        .blog-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 40px; }
+
+        .blog-card { 
+            background: var(--card); border: 1px solid rgba(56, 189, 248, 0.1); border-radius: 20px; 
+            padding: 25px; display: flex; flex-direction: column; gap: 12px; 
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); text-decoration: none; color: inherit;
+            position: relative; overflow: hidden;
+        }
+
+        .blog-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .blog-card::after { content: '→'; position: absolute; right: 25px; bottom: 25px; color: var(--primary); font-family: 'Orbitron'; font-size: 1.5rem; opacity: 0; transition: 0.3s; }
+        .blog-card:hover::after { opacity: 1; transform: translateX(5px); }
+
+        .blog-card h2 { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--primary); line-height: 1.4; padding-right: 40px; }
+        .blog-card p { opacity: 0.7; font-size: 0.9rem; font-weight: 300; line-height: 1.5; }
+        
+        .blog-meta { display: flex; gap: 15px; font-size: 0.7rem; opacity: 0.5; font-family: 'Orbitron'; }
+        .tag { background: rgba(244, 114, 182, 0.1); color: var(--accent); padding: 3px 8px; border-radius: 4px; font-size: 0.6rem; font-weight: bold; }
+
+        .footer { margin-top: 80px; text-align: center; font-size: 0.75rem; opacity: 0.4; font-family: 'Orbitron'; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; margin-bottom: 40px; }
+        
+        @media (max-width: 600px) { h1 { font-size: 1.8rem; } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <a href="index.html" class="nav-back">← OYUNA DÖN</a>
+            <h1>Zeka Günlüğü</h1>
+            <p class="subtitle">Strateji, Bilim ve Eğlence Hakkında Her Şey</p>
+        </header>
+
+        <div class="blog-grid">
+            
+            <!-- YAZI 10 -->
+            <a href="hedef-100-oyununun-alzheimer-ve-demans-hastalarına-muhtemel-faydalari.html" class="blog-card">
+                <div class="blog-meta"><span>📅 2 MAYIS 2026</span><span class="tag">SAĞLIK</span></div>
+                <h2>Alzheimer ve Demans Hastalarına Muhtemel Faydalar</h2>
+                <p>Nörodejeneratif hastalıklarla mücadelede zihinsel egzersizlerin destekleyici rolü ve bilişsel rezervin önemi.</p>
+            </a>
+
+            <!-- YAZI 9 -->
+            <a href="matematiksel-bir-bulmaca-mi-sabir-testi-mi-hedef-100-analizi.html" class="blog-card">
+                <div class="blog-meta"><span>📅 2 MAYIS 2026</span><span class="tag">ANALİZ</span></div>
+                <h2>Matematiksel Bir Bulmaca mı, Sabır Testi mi?</h2>
+                <p>Olasılıkların matematiği ile zihinsel dayanıklılığın mükemmel dengesi üzerine derin bir inceleme.</p>
+            </a>
+
+            <!-- YAZI 8 -->
+            <a href="100e-ulasanlarin-gizli-taktigi-kenar-yönetimi-stratejisi.html" class="blog-card">
+                <div class="blog-meta"><span>📅 2 MAYIS 2026</span><span class="tag">STRATEJİ</span></div>
+                <h2>100'e Ulaşanların Gizli Taktiği: Kenar Yönetimi</h2>
+                <p>80 barajını aşamayanlar için usta oyuncuların kullandığı "Dıştan İçe Sarmal" metodunun detayları.</p>
+            </a>
+
+            <!-- YAZI 7 -->
+            <a href="yaslanma-karsiti-bir-egzersiz-zeka-oyunlari-hafizayi-nasil-genc-tutuyor.html" class="blog-card">
+                <div class="blog-meta"><span>📅 2 MAYIS 2026</span><span class="tag">SAĞLIK</span></div>
+                <h2>Hafızayı Nasıl Genç Tutuyor? Yaşlanma Karşıtı Egzersiz</h2>
+                <p>Nöroplastisite kavramı ve zeka oyunlarının ileri yaşlarda bilişsel sağlığı koruma üzerindeki etkileri.</p>
+            </a>
+
+            <!-- YAZI 6 -->
+            <a href="gunde-15-dakika-strateji-oyunu-oynamanin-beyne-5-sasirtici-faydasi.html" class="blog-card">
+                <div class="blog-meta"><span>📅 2 MAYIS 2026</span><span class="tag">BİLİM</span></div>
+                <h2>Günde 15 Dakika Oyunun 5 Şaşırtıcı Faydası</h2>
+                <p>Kısa süreli ama yoğun zihinsel egzersizlerin karar verme hızı ve stres yönetimi üzerindeki etkileri.</p>
+            </a>
+
+            <!-- YAZI 5 -->
+            <a href="dijital-detoks-yerine-stratejik-odaklanma-hedef-100-ile-zihnini-tazele.html" class="blog-card">
+                <div class="blog-meta"><span>📅 2 MAYIS 2026</span><span class="tag">ODAKLANMA</span></div>
+                <h2>Dijital Detoks Yerine Stratejik Odaklanma</h2>
+                <p>Pasif içerik tüketiminden kurtulup zihni "Flow" (akış) haline sokarak tazelenmenin yolları.</p>
+            </a>
+
+            <!-- YAZI 4 -->
+            <a href="iqsu-guvenenlerin-yeni-gozdesi-hedef-100-rekorlarini-kim-kiracak.html" class="blog-card">
+                <div class="blog-meta"><span>📅 1 MAYIS 2026</span><span class="tag">REKABET</span></div>
+                <h2>Rekorları Kim Kıracak? IQ'suna Güvenenlerin Gözdesi</h2>
+                <p>Hedef 100 neden dâhilerin buluşma noktası oldu? Global leaderboard rekabetine hazır mısın?</p>
+            </a>
+
+            <!-- YAZI 3 -->
+            <a href="eski-okul-oyunlarinin-modern-donusu-nostaljiyi-teknolojiyle-birlestirdik.html" class="blog-card">
+                <div class="blog-meta"><span>📅 1 MAYIS 2026</span><span class="tag">NOSTALJİ</span></div>
+                <h2>Eski Okul Oyunlarının Modern Dönüşü</h2>
+                <p>Kağıt kalemle oynanan nostaljik zeka oyunlarının dijital çağdaki fütüristik yolculuğu.</p>
+            </a>
+
+            <!-- YAZI 2 -->
+            <a href="hedef-100de-asla-yapmamaniz-gereken-3-kritik-hata.html" class="blog-card">
+                <div class="blog-meta"><span>📅 1 MAYIS 2026</span><span class="tag">TAKTİK</span></div>
+                <h2>Asla Yapmamanız Gereken 3 Kritik Hata</h2>
+                <p>Yeni başlayanların en çok düştüğü merkez tuzağı ve hamle dengesi hatalarından nasıl kaçınılır?</p>
+            </a>
+
+            <!-- YAZI 1 -->
+            <a href="strateji-oyunlari-zekayi-nasil-keskinlestiriyor-5-sasirtici-fayda.html" class="blog-card">
+                <div class="blog-meta"><span>📅 1 MAYIS 2026</span><span class="tag">BİLİM</span></div>
+                <h2>Strateji Oyunları Zekayı Nasıl Keskinleştiriyor?</h2>
+                <p>Beynin karar verme mekanizmasını güçlendiren nörolojik süreçler ve stratejinin beyne katkıları.</p>
+            </a>
+
+        </div>
+
+        <footer class="footer">
+            © 2026 HEDEF100.COM | ZEKA VE STRATEJİ PORTALI
+        </footer>
+    </div>
+
+</body>
+</html>
